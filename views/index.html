@@ -2,18 +2,20 @@
 
 
 {% block content %}
-{{title}}
-<p>hotels</p>
-{{ hotels | json }}
-<p>rest</p>
-{{ restaurants | json }}
-<p>things to do</p>
-{{ thingsToDo | json }}
+
+
+<div class="btn-group" role="group" aria-label="...">
+  <button type="button" class="btn btn-default">Day 1</button>
+  <button type="button" class="btn btn-default">Day 2</button>
+  <button type="button" class="btn btn-default">Day 3</button>
+</div>
+<button type="button" class="btn btn-default">+Add Day</button>
+
+
+
+
 
 {% endblock %}
-
-
-
 <script>
 
 {% autoescape false %}

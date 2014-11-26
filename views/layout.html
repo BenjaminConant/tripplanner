@@ -5,9 +5,7 @@
   <title>{% block title %}Trip Planner{% endblock %}</title>
   <link href="bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="/stylesheets/style.css" rel="stylesheet">
-  <script src="bower_components/jquery/dist/jquery.min.js" ></script>
-  <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC6FfBTCOV795Tvo5tO8pDeIqmTtTtUX0o&sensor=true"></script>
+
 
 </head>
 <body>
@@ -39,8 +37,16 @@
 
 
     <div class="footer">
-      Trip Planner by Ben & Hugo
+      <h4>Trip Planner by Ben & Hugo</h4>
     </div>
+
+    <script src="bower_components/jquery/dist/jquery.min.js" ></script>
+    <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC6FfBTCOV795Tvo5tO8pDeIqmTtTtUX0o&sensor=true"></script>
+    <script src="main.js"></script>
+
+    {% block script %}{%endblock%}
+    
   </div>
 </body>
 </html>

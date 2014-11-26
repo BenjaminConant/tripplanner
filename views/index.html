@@ -2,13 +2,10 @@
 
 
 {% block content %}
-
-
-
 <div class="row">
   <div class="col-sm-4 col-md-4 col-lg-4">
-    <div class="btn-group" role="group" aria-label="...">
-      <button type="button" class="btn btn-default active">Day 1</button>
+    <div id="daysBtnGroup" class="btn-group" role="group" aria-label="...">
+      <button type="button" class="btn btn-primary">Day 1</button>
       <button type="button" class="btn btn-default">Day 2</button>
       <button type="button" class="btn btn-default">Day 3</button>
     </div>
@@ -31,7 +28,7 @@
           <option>4</option>
           <option>5</option>
         </select>
-        <button type="button" class="btn btn-default">Add</button>
+        <button type="button" class="btn btn-primary">Add</button>
       </div>
 
       <div class="col-sm-4 col-md-4 col-lg-4">
@@ -43,7 +40,7 @@
           <option>4</option>
           <option>5</option>
         </select>
-        <button type="button" class="btn btn-default">Add</button>
+        <button type="button" class="btn btn-primary">Add</button>
       </div>
 
       <div class="col-sm-4 col-md-4 col-lg-4">
@@ -55,7 +52,7 @@
           <option>4</option>
           <option>5</option>
         </select>
-        <button type="button" class="btn btn-default">Add</button>
+        <button type="button" class="btn btn-primary">Add</button>
       </div>
     </div>
 
@@ -84,66 +81,24 @@
           <li>hello hugo</li>
         </ul>
       </li>
-     </ul> 
+     </ul>
   </div>
   <div class="col-sm-9 col-md-9 col-lg-9" style="height:500px;">
     <div id="map-canvas" style="width: 100%; height: 100%"></div>
   </div>
 </div>
 <div class="row" style="height:35px;"></div>
+{% endblock %}
 
 
-
-
-
-
-
+{% block script %}
 
 <script>
-
-function initialize_gmaps() {
- 
-  // initialize new google maps LatLng object
-  var myLatlng = new google.maps.LatLng(40.705786,-74.007672);
- 
-  // set the map options hash
-  var mapOptions = {
-    center: myLatlng,
-    zoom: 16,
-    mapTypeId: google.maps.MapTypeId.ROADMAP
-  };
- 
-  // get the maps div's HTML obj
-  var map_canvas_obj = document.getElementById("map-canvas");
- 
-  // initialize a new Google Map with the options
-  var map = new google.maps.Map(map_canvas_obj, mapOptions);
- 
-  // Add the marker to the map
-  var marker = new google.maps.Marker({
-    position: myLatlng,
-    title:"Hello World!"
-  });
- 
-  // Add the marker to the map by calling setMap()
-  marker.setMap(map);
-}
- 
-
-
-
-
-
 {% autoescape false %}
 var all_hotels = {{ hotels | json }};
 var all_restaurants = {{ restaurants | json }};
 var all_things_to_do = {{ thingsToDo | json }};
 {% endautoescape %}
-
-$(document).ready(function() {
-  initialize_gmaps();
-});
-
 </script>
 
 {% endblock %}

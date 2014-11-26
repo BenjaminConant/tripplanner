@@ -1,0 +1,19 @@
+{{title}}
+<p>hotels</p>
+{{ hotels | json }}
+<p>rest</p>
+{{ restaurants | json }}
+<p>things to do</p>
+{{ thingsToDo | json }}
+
+
+
+<script>
+
+{% autoescape false %}
+var all_hotels = {{ hotels | json }};
+var all_restaurants = {{ restaurants | json }};
+var all_things_to_do = {{ thingsToDo | json }};
+{% endautoescape %}
+
+</script>

@@ -4,12 +4,74 @@
 {% block content %}
 
 
-<div class="btn-group" role="group" aria-label="...">
-  <button type="button" class="btn btn-default">Day 1</button>
-  <button type="button" class="btn btn-default">Day 2</button>
-  <button type="button" class="btn btn-default">Day 3</button>
+
+<div class="row">
+  <div class="col-sm-4 col-md-4 col-lg-4">
+    <div class="btn-group" role="group" aria-label="...">
+      <button type="button" class="btn btn-default">Day 1</button>
+      <button type="button" class="btn btn-default">Day 2</button>
+      <button type="button" class="btn btn-default">Day 3</button>
+    </div>
+    <button type="button" class="btn btn-default">+Add Day</button>
+  </div>
+  <div class="col-sm-8 col-md-8 col-lg-8">
+
+    <div class="row">
+      <div class="col-sm-4 col-md-4 col-lg-4"><label>Hotels</label></div>
+      <div class="col-sm-4 col-md-4 col-lg-4"><label>Things to Do</label></div>
+      <div class="col-sm-4 col-md-4 col-lg-4"><label>Restaurants</label></div>
+    </div>
+    <div class="row">
+      <div class="col-sm-4 col-md-4 col-lg-4">
+
+        <select class="form-control tpSelect">
+          <option>1</option>
+          <option>2</option>
+          <option>3</option>
+          <option>4</option>
+          <option>5</option>
+        </select>
+        <button type="button" class="btn btn-default">Add</button>
+      </div>
+
+      <div class="col-sm-4 col-md-4 col-lg-4">
+
+        <select class="form-control tpSelect">
+          <option>1</option>
+          <option>2</option>
+          <option>3</option>
+          <option>4</option>
+          <option>5</option>
+        </select>
+        <button type="button" class="btn btn-default">Add</button>
+      </div>
+
+      <div class="col-sm-4 col-md-4 col-lg-4">
+
+        <select class="form-control tpSelect">
+          <option>1</option>
+          <option>2</option>
+          <option>3</option>
+          <option>4</option>
+          <option>5</option>
+        </select>
+        <button type="button" class="btn btn-default">Add</button>
+      </div>
+    </div>
+
+  </div>
 </div>
-<button type="button" class="btn btn-default">+Add Day</button>
+
+<div class="row">
+  <div class="col-sm-3 col-md-3 col-lg-3">
+
+  </div>
+  <div class="col-sm-9 col-md-9 col-lg-9">
+
+  </div>
+</div>
+
+
 
 
 
@@ -23,5 +85,7 @@ var all_hotels = {{ hotels | json }};
 var all_restaurants = {{ restaurants | json }};
 var all_things_to_do = {{ thingsToDo | json }};
 {% endautoescape %}
+
+//populate controls with hotels, restaurants, allthings
 
 </script>

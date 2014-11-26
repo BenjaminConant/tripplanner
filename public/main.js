@@ -27,7 +27,7 @@ function initialize_gmaps() {
   marker.setMap(map);
 }
 
-(document).ready(function() {
+$(document).ready(function() {
   initialize_gmaps();
 
   $("#daysBtnGroup > button").click(function(){

@@ -1,3 +1,7 @@
+{% extends "layout.html" %}
+
+
+{% block content %}
 {{title}}
 <p>hotels</p>
 {{ hotels | json }}
@@ -5,6 +9,8 @@
 {{ restaurants | json }}
 <p>things to do</p>
 {{ thingsToDo | json }}
+
+{% endblock %}
 
 
 

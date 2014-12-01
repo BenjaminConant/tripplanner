@@ -5,11 +5,11 @@
 <div class="row">
   <div class="col-sm-4 col-md-4 col-lg-4">
     <div id="daysBtnGroup" class="btn-group" role="group" aria-label="...">
-      <button type="button" class="btn btn-primary">Day 1</button>
-      <button type="button" class="btn btn-default">Day 2</button>
-      <button type="button" class="btn btn-default">Day 3</button>
+      <button id="day1-btn" type="button" class="btn btn-primary">Day 1</button>
+      <button id="day2-btn" type="button" class="btn btn-default">Day 2</button>
+      <button id="day3-btn" type="button" class="btn btn-default">Day 3</button>
     </div>
-    <button type="button" class="btn btn-default">+Add Day</button>
+    <button id="add-day" type="button" class="btn btn-default">+Add Day</button>
   </div>
   <div class="col-sm-8 col-md-8 col-lg-8">
 
@@ -18,75 +18,134 @@
       <div class="col-sm-4 col-md-4 col-lg-4"><label>Things to Do</label></div>
       <div class="col-sm-4 col-md-4 col-lg-4"><label>Restaurants</label></div>
     </div>
+    
+
+
     <div class="row">
       <div class="col-sm-4 col-md-4 col-lg-4">
 
-        <select class="form-control tpSelect">
-          <option>1</option>
-          <option>2</option>
-          <option>3</option>
-          <option>4</option>
-          <option>5</option>
+        <select id="hotel-select" class="form-control tpSelect">
+          {% for hotel in hotels %}
+          <option data="{{hotel |json}}">{{hotel.name}}</option>
+          {% endfor %}
         </select>
-        <button type="button" class="btn btn-primary">Add</button>
+        <button id="btn-hotel" type="button" class="btn btn-primary">Add</button>
       </div>
 
       <div class="col-sm-4 col-md-4 col-lg-4">
 
-        <select class="form-control tpSelect">
-          <option>1</option>
-          <option>2</option>
-          <option>3</option>
-          <option>4</option>
-          <option>5</option>
+        <select id="thing-to-do-select" class="form-control tpSelect">
+          {% for thingsToDo in thingsToDo %}
+          <option data="{{thingsToDo |json}}">{{thingsToDo.name}}</option>
+          {% endfor %}
         </select>
-        <button type="button" class="btn btn-primary">Add</button>
+        <button id="btn-thing-to-do" type="button" class="btn btn-primary">Add</button>
       </div>
 
       <div class="col-sm-4 col-md-4 col-lg-4">
 
-        <select class="form-control tpSelect">
-          <option>1</option>
-          <option>2</option>
-          <option>3</option>
-          <option>4</option>
-          <option>5</option>
+        <select id="restaurant-select" class="form-control tpSelect">
+          {% for restaurants in restaurants %}
+          <option data="{{restaurants |json}}">{{restaurants.name}}</option>
+          {% endfor %}
         </select>
-        <button type="button" class="btn btn-primary">Add</button>
+        <button id="btn-restaurant" type="button" class="btn btn-primary">Add</button>
       </div>
     </div>
 
   </div>
 </div>
 <div class="row" style="height:20px;"></div>
-<div class="row">
+
+<div id="day-container">
+<div id="day1-content" class="row">
   <div class="col-sm-3 col-md-3 col-lg-3">
     <h1>Plan for Day <span id="plan-day-number">1</span></h1>
     <ul>
       <li>
         <strong>Hotel</strong>
-        <ul style="list-style: none; padding-left: 0px">
-          <li>hello hugo</li>
+        <ul id="hotel-list" style="list-style: none; padding-left: 0px">
+
         </ul>
       </li>
       <li>
         <strong>Things To Do</strong>
-        <ul style="list-style: none; padding-left: 0px">
-          <li>hello hugo</li>
+        <ul id="thing-to-do-list" style="list-style: none; padding-left: 0px">
+
         </ul>
       </li>
       <li>
         <strong>Restaurants</strong>
-        <ul style="list-style: none; padding-left: 0px">
-          <li>hello hugo</li>
+        <ul id="restaurant-list" style="list-style: none; padding-left: 0px">
+
         </ul>
       </li>
-     </ul>
+    </ul>
   </div>
   <div class="col-sm-9 col-md-9 col-lg-9" style="height:500px;">
-    <div id="map-canvas" style="width: 100%; height: 100%"></div>
+    <div id="map-canvas-1" style="width: 100%; height: 100%"></div>
   </div>
 </div>
+
+<div id="day2-content" class="row">
+  <div class="col-sm-3 col-md-3 col-lg-3">
+    <h1>Plan for Day <span id="plan-day-number">2</span></h1>
+    <ul>
+      <li>
+        <strong>Hotel</strong>
+        <ul id="hotel-list" style="list-style: none; padding-left: 0px">
+
+        </ul>
+      </li>
+      <li>
+        <strong>Things To Do</strong>
+        <ul id="thing-to-do-list" style="list-style: none; padding-left: 0px">
+
+        </ul>
+      </li>
+      <li>
+        <strong>Restaurants</strong>
+        <ul id="restaurant-list" style="list-style: none; padding-left: 0px">
+
+        </ul>
+      </li>
+    </ul>
+  </div>
+  <div class="col-sm-9 col-md-9 col-lg-9" style="height:500px;">
+    <div id="map-canvas-2" style="width: 100%; height: 100%"></div>
+  </div>
+</div>
+
+<div id="day3-content" class="row">
+  <div class="col-sm-3 col-md-3 col-lg-3">
+    <h1>Plan for Day <span id="plan-day-number">3</span></h1>
+    <ul>
+      <li>
+        <strong>Hotel</strong>
+        <ul id="hotel-list" style="list-style: none; padding-left: 0px">
+
+        </ul>
+      </li>
+      <li>
+        <strong>Things To Do</strong>
+        <ul id="thing-to-do-list" style="list-style: none; padding-left: 0px">
+
+        </ul>
+      </li>
+      <li>
+        <strong>Restaurants</strong>
+        <ul id="restaurant-list" style="list-style: none; padding-left: 0px">
+
+        </ul>
+      </li>
+    </ul>
+  </div>
+  <div class="col-sm-9 col-md-9 col-lg-9" style="height:500px;">
+    <div id="map-canvas-3" style="width: 100%; height: 100%"></div>
+  </div>
+</div>
+</div>
+
 <div class="row" style="height:35px;"></div>
 {% endblock %}
 

@@ -7,6 +7,7 @@ router.get('/', function(req, res) {
  models.Hotel.find(function(err, hotels) {
    models.Restaurant.find(function(err, restaurants){
    	models.ThingToDo.find(function(err, thingsToDo){
+   		console.log(hotels);
    		res.render('index', { hotels: hotels, restaurants: restaurants, thingsToDo: thingsToDo, title: "Trip Planner" });
    	});
    });

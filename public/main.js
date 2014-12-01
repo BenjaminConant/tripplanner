@@ -1,84 +1,48 @@
 
 function initialize_gmaps(dayNumber) {
-
-  // initialize new google maps LatLng object
   var myLatlng = new google.maps.LatLng(40.717223,-73.982284);
-  
-  // set the map options hash
   var mapOptions = {
     center: myLatlng,
     zoom: 14,
     mapTypeId: google.maps.MapTypeId.ROADMAP
   };
-
+  
   // https://cdn2.iconfinder.com/data/icons/picons-essentials/57/checklist-512.png - to do list
   // https://cdn1.iconfinder.com/data/icons/maps-and-locations/16/restaurant-512.png -- rest
   // http://cdn.flaticon.com/png/256/18499.png -- hotels 
-  // get the maps div's HTML obj
-  var map_canvas_obj = document.getElementById("map-canvas-" + dayNumber);
-
-  // initialize a new Google Map with the options
-  var map = new google.maps.Map(map_canvas_obj, mapOptions);
-
   
-
-  // var beerImage = "http://icons.iconarchive.com/icons/iconshock/real-vista-food/128/beer-icon.png";
-  // var hotelIcon = "http://cdn.flaticon.com/png/256/18499.png";
-  // var bensHouse = new google.maps.Marker({
-  //   position: bensHouse,
-  //   title: "Bens House",
-  //   icon: beerImage,  
-  //   draggable: true,
-  // });
-  // google.maps.event.addListener(bensHouse, 'click', function() {
-  //   benInfoWindow.open(map, bensHouse);
-  // } )
-
-
+  var map_canvas_obj = document.getElementById("map-canvas-" + dayNumber);
+  var map = new google.maps.Map(map_canvas_obj, mapOptions);
   var markerInfoWindowContent = "<p><strong>Fullstack Academy of code OOOORAHHHH</strong></p>";
   var markerInfoWindow = new google.maps.InfoWindow({
     content: markerInfoWindowContent
   })
-
-
   maps[dayNumber] = map;
-
-
 }
+
+//https://cdn3.iconfinder.com/data/icons/flatforlinux/64/1%20-%20Home.png - hotel
+//https://cdn4.iconfinder.com/data/icons/SUPERVISTA/jobs_icons/png/64/chef.png  - rest
+//https://cdn1.iconfinder.com/data/icons/Map-Markers-Icons-Demo-PNG/64/Map-Marker-Push-Pin--Right-Pink.png
+
 
 var maps = {};
 
-
-
-
-  // type can be hotel, resturant, or thing to do. name is the name of hotel resturant or thing to do.
   var mapPrinter = function (locationLat, locationLong, windowContent, title, icon, day){
-    
-
     var newLatlng = new google.maps.LatLng(locationLat, locationLong);
-   
-    
+
     var markerInfoWindow = new google.maps.InfoWindow({
       content: windowContent
     })
-
     var newMarker = new google.maps.Marker({
       position: newLatlng,
-      title: title
+      title: title,
+      icon: icon
     });
-
     google.maps.event.addListener(newMarker, 'click', function(){
       markerInfoWindow.open(maps[day], newMarker)
     })
-    
-
     newMarker.setMap(maps[day]);
-
-
-
   }
-
-
 
 $(document).ready(function() {
   var numDays = 3;
@@ -88,36 +52,47 @@ $(document).ready(function() {
   initialize_gmaps(1);
   initialize_gmaps(2);
   initialize_gmaps(3);
-
-
+  
   $("#daysBtnGroup > button").click(function(){
     if($(this).hasClass('btn-default')){
       $(this).removeClass('btn-default').addClass("btn-primary").siblings().removeClass("btn-primary").addClass("btn-default");
     }
   });
-
-
+  
   $("#day1-btn").click( function(){
      day = 1;
-     $("#day1-content").show();
-     google.maps.event.trigger(maps['1'], 'resize');
-     $("#day2-content").hide();
-     $("#day3-content").hide();
+     for (var i=0; i <= numDays; i++) {
+          if (i === day) {
+            $("#day"+i+"-content").show();
+          } else {
+            $("#day"+i+"-content").hide();
+          }
+        }
+     google.maps.event.trigger(maps[day], 'resize');   
   });
+  
   $("#day2-btn").click(function(){
      day = 2;
-     $("#day2-content").show();
-     google.maps.event.trigger(maps['2'], 'resize');
-     $("#day1-content").hide();
-     $("#day3-content").hide();
+     for (var i=0; i <= numDays; i++) {
+          if (i === day) {
+            $("#day"+i+"-content").show();
+          } else {
+            $("#day"+i+"-content").hide();
+          }
+        }
+     google.maps.event.trigger(maps[day], 'resize');
   });
   
   $("#day3-btn").click(function(){
      day = 3;
-     $("#day3-content").show();
-     google.maps.event.trigger(maps['3'], 'resize');
-     $("#day2-content").hide();
-     $("#day1-content").hide();
+     for (var i=0; i <= numDays; i++) {
+          if (i === day) {
+            $("#day"+i+"-content").show();
+          } else {
+            $("#day"+i+"-content").hide();
+          }
+        }
+     google.maps.event.trigger(maps[day], 'resize');
   });
 
 
@@ -128,11 +103,9 @@ $(document).ready(function() {
     var lat = hotelData.place[0].location[0];
     var longe = hotelData.place[0].location[1];
     var title = hotelData.name; 
-    var hotelIcon = "http://cdn.flaticon.com/png/256/18499.png";
-    
+    var hotelIcon = "https://cdn3.iconfinder.com/data/icons/flatforlinux/64/1%20-%20Home.png"; 
     mapPrinter(lat, longe, markerInfoWindowContent, title, hotelIcon, day);
-
-    $("#day"+day+"-content #hotel-list").append("<li>" + title + "</li>");
+    $("#day"+day+"-content #hotel-list").html("<li>" + title + "</li>");
   });
 
   $("#btn-thing-to-do").click(function(){
@@ -142,12 +115,9 @@ $(document).ready(function() {
     var lat = thingData.place[0].location[0];
     var longe = thingData.place[0].location[1];
     var title = thingData.name; 
-    var thingIcon = "http://cdn.flaticon.com/png/256/18499.png";
-
+    var thingIcon = "https://cdn1.iconfinder.com/data/icons/Map-Markers-Icons-Demo-PNG/64/Map-Marker-Push-Pin--Right-Pink.png";
     mapPrinter(lat, longe, markerInfoWindowContent, title, thingIcon, day);
-
     $("#day"+day+"-content #thing-to-do-list").append("<li>" + title + "</li>");
-    
   });
 
   $("#btn-restaurant").click(function(){
@@ -157,26 +127,45 @@ $(document).ready(function() {
     var lat = restData.place[0].location[0];
     var longe = restData.place[0].location[1];
     var title = restData.name; 
-    var restIcon = "http://cdn.flaticon.com/png/256/18499.png";
-
+    var restIcon = "https://cdn4.iconfinder.com/data/icons/REALVISTA/food/png/64/french_fries.png";
     mapPrinter(lat, longe, markerInfoWindowContent, title, restIcon, day);
-
     $("#day"+day+"-content #restaurant-list").append("<li>" + title + "</li>");
-    
   });
 
   $('#add-day').click(function(){
     numDays++;
     $('#daysBtnGroup').append('<button id="day'+numDays+'-btn" type="button" class="btn btn-default">Day '+ numDays +'</button>');
     var dayTemplate = $('#day1-content').clone();
-    finalDay = dayTemplate.html().replace("day1-content", "day"+numDays+"-content");
+    newDay = dayTemplate.attr("id", "day"+numDays+"-content")
+    $('#day-container').append(newDay);
+    $("#day"+numDays+"-content #plan-day-number").text(''+numDays);
+    $("#day"+numDays+"-content #plan-day-number").text(''+numDays);
+    $("#day"+numDays+"-content #map-canvas-1").attr("id", "map-canvas-"+numDays);
+    $("#day"+numDays+"-content #hotel-list").html('');
+    $("#day"+numDays+"-content #thing-to-do-list").html('');
+    $("#day"+numDays+"-content #restaurant-list").html('');
+    $("#day"+numDays+"-content").hide();
+    initialize_gmaps(numDays);
+    
+    $('#day'+numDays+'-btn').click( function(){
+       day = numDays;
+       $("#day"+numDays+"-content").show();
+       google.maps.event.trigger(maps[day], 'resize');
+       
+       for (var i=0; i <= numDays; i++) {
+          if (i === day) {
+            $("#day"+i+"-content").show();
+          } else {
+            $("#day"+i+"-content").hide();
+          }
+       }
+     });
 
-    $('#day-container').append(finalDay);
-
-
-
-
-  })
-
+    $('#day'+numDays+'-btn').click(function(){
+      if($(this).hasClass('btn-default')){
+        $(this).removeClass('btn-default').addClass("btn-primary").siblings().removeClass("btn-primary").addClass("btn-default");
+      }
+    });
+  });
 
 });

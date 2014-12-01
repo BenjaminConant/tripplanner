@@ -6,7 +6,7 @@ function initialize_gmaps(dayNumber) {
     zoom: 14,
     mapTypeId: google.maps.MapTypeId.ROADMAP
   };
-  
+
   var map_canvas_obj = document.getElementById("map-canvas-" + dayNumber);
   var map = new google.maps.Map(map_canvas_obj, mapOptions);
   var markerInfoWindowContent = "<p><strong>Fullstack Academy of code OOOORAHHHH</strong></p>";
@@ -25,7 +25,7 @@ var showDay = function(dayToShow, numDays) {
         $("#day"+i+"-content").hide();
       }
     }
- google.maps.event.trigger(maps[dayToShow], 'resize');   
+ google.maps.event.trigger(maps[dayToShow], 'resize');
 }
 
 var mapPrinter = function (locationLat, locationLong, windowContent, title, icon, day){
@@ -43,9 +43,12 @@ var mapPrinter = function (locationLat, locationLong, windowContent, title, icon
     markerInfoWindow.open(maps[day], newMarker)
   })
   newMarker.setMap(maps[day]);
+
+  markers.push(newMarker);
 }
 
 var maps;
+var markers;
 var numDays;
 var currentDay;
 
@@ -53,6 +56,7 @@ $(document).ready(function() {
   numDays = 3;
   currentDay = 1;
   maps = {};
+  markers = [];
 
   $("#day2-content").hide();
   $("#day3-content").hide();
@@ -60,23 +64,23 @@ $(document).ready(function() {
   initialize_gmaps(1);
   initialize_gmaps(2);
   initialize_gmaps(3);
-  
+
   $("#daysBtnGroup > button").click(function(){
     if($(this).hasClass('btn-default')){
       $(this).removeClass('btn-default').addClass("btn-primary").siblings().removeClass("btn-primary").addClass("btn-default");
     }
   });
-  
+
   $("#day1-btn").click( function(){
      currentDay = 1;
      showDay(currentDay, numDays);
   });
-  
+
   $("#day2-btn").click(function(){
      currentDay = 2;
     showDay(currentDay, numDays);
   });
-  
+
   $("#day3-btn").click(function(){
     currentDay = 3;
     showDay(currentDay, numDays);
@@ -89,10 +93,12 @@ $(document).ready(function() {
     var markerInfoWindowContent = "<p><strong>" + hotelData.name +"</strong></p><p>Phone Number: " + hotelData.place[0].phone +"</p><p>Address: "+hotelData.place[0].address+"</p>";
     var lat = hotelData.place[0].location[0];
     var longe = hotelData.place[0].location[1];
-    var title = hotelData.name; 
-    var hotelIcon = "https://cdn3.iconfinder.com/data/icons/flatforlinux/64/1%20-%20Home.png"; 
+    var title = hotelData.name;
+    var hotelIcon = "https://cdn3.iconfinder.com/data/icons/flatforlinux/64/1%20-%20Home.png";
     mapPrinter(lat, longe, markerInfoWindowContent, title, hotelIcon, currentDay);
-    $("#day"+currentDay+"-content #hotel-list").html("<li>" + title + "<span id='trash-can' class='glyphicon glyphicon-trash pull-right'></span></li>");
+    $("#day"+currentDay+"-content #hotel-list").html("<li>" + title + "<span id='trash-can-"+(markers.length-1)+"' class='glyphicon glyphicon-trash pull-right'></span></li>");
+
+    setDeleteEvent(markers.length-1);
   });
 
   $("#btn-thing-to-do").click(function(){
@@ -101,10 +107,12 @@ $(document).ready(function() {
     var markerInfoWindowContent = "<p><strong>" + thingData.name +"</strong></p><p>Phone Number: "+ thingData.place[0].phone +"</p><p>Address: "+thingData.place[0].address+"</p>";
     var lat = thingData.place[0].location[0];
     var longe = thingData.place[0].location[1];
-    var title = thingData.name; 
+    var title = thingData.name;
     var thingIcon = "https://cdn1.iconfinder.com/data/icons/Map-Markers-Icons-Demo-PNG/64/Map-Marker-Push-Pin--Right-Pink.png";
     mapPrinter(lat, longe, markerInfoWindowContent, title, thingIcon, currentDay);
-    $("#day"+currentDay+"-content #thing-to-do-list").append("<li>" + title + "<span id='trash-can' class='glyphicon glyphicon-trash pull-right'></span></li>");
+    $("#day"+currentDay+"-content #thing-to-do-list").append("<li>" + title + "<span id='trash-can-"+(markers.length-1)+"' class='glyphicon glyphicon-trash pull-right'></span></li>");
+
+    setDeleteEvent(markers.length-1);
   });
 
   $("#btn-restaurant").click(function(){
@@ -113,10 +121,12 @@ $(document).ready(function() {
     var markerInfoWindowContent = "<p><strong>" + restData.name +"</strong></p><p>Phone Number: "+ restData.place[0].phone +"</p><p>Address: "+restData.place[0].address+"</p>";
     var lat = restData.place[0].location[0];
     var longe = restData.place[0].location[1];
-    var title = restData.name; 
+    var title = restData.name;
     var restIcon = "https://cdn4.iconfinder.com/data/icons/REALVISTA/food/png/64/french_fries.png";
     mapPrinter(lat, longe, markerInfoWindowContent, title, restIcon, currentDay);
-    $("#day"+currentDay+"-content #restaurant-list").append("<li>" + title + "<span id='trash-can' class='glyphicon glyphicon-trash pull-right'></span></li>");
+    $("#day"+currentDay+"-content #restaurant-list").append("<li>" + title + "<span id='trash-can-"+(markers.length-1)+"' class='glyphicon glyphicon-trash pull-right'></span></li>");
+
+    setDeleteEvent(markers.length-1);
   });
 
   $('#add-day').click(function(){
@@ -136,7 +146,7 @@ $(document).ready(function() {
     $("#day"+numDays+"-content #restaurant-list").html('');
     $("#day"+numDays+"-content").hide();
     initialize_gmaps(numDays);
-    
+
     $('#day'+numDays+'-btn').click( function(){
       currentDay = thisDay;
       showDay(currentDay, numDays);
@@ -150,3 +160,10 @@ $(document).ready(function() {
   });
 
 });
+
+function setDeleteEvent(id){
+  $('#trash-can-'+id).click(function(){
+    markers[id].setMap(null);
+    $(this).parent().remove();
+  });
+}

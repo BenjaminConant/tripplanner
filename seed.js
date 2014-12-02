@@ -151,9 +151,5 @@ var place = new Place({address: "828 Broadway", city: "New York", state: "NY", p
 ThingsToDo.create({name: "Strand Bookstore", place: [place], age_range: "All" });
 
 
-Day.create({day_number: 1, hotels: [], restaurant: [], ThingsToDo: [] });
-Day.create({day_number: 2, hotels: [], restaurant: [], ThingsToDo: [] });
-Day.create({day_number: 3, hotels: [], restaurant: [], ThingsToDo: [] });
-
 console.log("Finished inserting data");
 console.log("Control-C to quit");

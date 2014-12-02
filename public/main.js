@@ -99,6 +99,8 @@ $(document).ready(function() {
     $("#day"+currentDay+"-content #hotel-list").html("<li>" + title + "<span id='trash-can-"+(markers.length-1)+"' class='glyphicon glyphicon-trash pull-right'></span></li>");
 
     setDeleteEvent(markers.length-1);
+
+    writeVisitToServer(hotelData._id, currentDay, 'hotels')
   });
 
   $("#btn-thing-to-do").click(function(){
@@ -113,6 +115,8 @@ $(document).ready(function() {
     $("#day"+currentDay+"-content #thing-to-do-list").append("<li>" + title + "<span id='trash-can-"+(markers.length-1)+"' class='glyphicon glyphicon-trash pull-right'></span></li>");
 
     setDeleteEvent(markers.length-1);
+
+    writeVisitToServer(thingData._id, currentDay, 'thingsToDos');
   });
 
   $("#btn-restaurant").click(function(){
@@ -127,6 +131,8 @@ $(document).ready(function() {
     $("#day"+currentDay+"-content #restaurant-list").append("<li>" + title + "<span id='trash-can-"+(markers.length-1)+"' class='glyphicon glyphicon-trash pull-right'></span></li>");
 
     setDeleteEvent(markers.length-1);
+
+    writeVisitToServer(restData._id, currentDay, 'restaurants');
   });
 
   $('#add-day').click(function(){
@@ -166,4 +172,22 @@ function setDeleteEvent(id){
     markers[id].setMap(null);
     $(this).parent().remove();
   });
+}
+
+
+function writeVisitToServer(attraction_id, dayId, type_of_place) {
+  var post_data = {
+    attraction_id: attraction_id,
+    attraction_type: type_of_place
+  };
+
+  // the callback function below will be called if this request completes successfully.
+  // the server's response to this request is passed into this callback function as "responseData"
+
+  var post_callback = function (responseData) {
+    alert(responseData);
+  };
+
+  // jQuery Ajax call
+  $.post( "/days/" + dayId + "/attractions", post_data, post_callback);
 }

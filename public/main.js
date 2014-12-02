@@ -52,6 +52,7 @@ var markers;
 var numDays;
 var currentDay;
 
+
 $(document).ready(function() {
   numDays = 3;
   currentDay = 1;
@@ -86,6 +87,17 @@ $(document).ready(function() {
     showDay(currentDay, numDays);
   });
 
+  $( "body" ).delegate( "span", "click", function() {
+    console.log("hello");
+    $(this).parent().remove();
+    // get the id somehow
+    var id = $(this).getAttribute('data');
+    console.log(id);
+    /// make AJAX call to delete
+    /// write the AJAX delete function!!!
+    /// figure out markers (delete all and print all evertime a change is made to the object ... implement in callbacks ... get geo location from data tag)
+
+  });
 
   $("#btn-hotel").click(function(){
     var select = $('#hotel-select');
@@ -94,13 +106,14 @@ $(document).ready(function() {
     var lat = hotelData.place[0].location[0];
     var longe = hotelData.place[0].location[1];
     var title = hotelData.name;
+    var id = hotelData._id
     var hotelIcon = "https://cdn3.iconfinder.com/data/icons/flatforlinux/64/1%20-%20Home.png";
     mapPrinter(lat, longe, markerInfoWindowContent, title, hotelIcon, currentDay);
-    $("#day"+currentDay+"-content #hotel-list").html("<li>" + title + "<span id='trash-can-"+(markers.length-1)+"' class='glyphicon glyphicon-trash pull-right'></span></li>");
+    $("#day"+currentDay+"-content #hotel-list").html("<li>" + title + "<span data="+id+" id='trash-can-"+(markers.length-1)+"' class='glyphicon glyphicon-trash pull-right'></span></li>");
 
     setDeleteEvent(markers.length-1);
 
-    writeVisitToServer(hotelData._id, currentDay, 'hotels')
+    writeVisitToServer(hotelData._id, currentDay, 'hotels', title)
   });
 
   $("#btn-thing-to-do").click(function(){
@@ -110,29 +123,34 @@ $(document).ready(function() {
     var lat = thingData.place[0].location[0];
     var longe = thingData.place[0].location[1];
     var title = thingData.name;
+    var id = thingData._id
     var thingIcon = "https://cdn1.iconfinder.com/data/icons/Map-Markers-Icons-Demo-PNG/64/Map-Marker-Push-Pin--Right-Pink.png";
     mapPrinter(lat, longe, markerInfoWindowContent, title, thingIcon, currentDay);
-    $("#day"+currentDay+"-content #thing-to-do-list").append("<li>" + title + "<span id='trash-can-"+(markers.length-1)+"' class='glyphicon glyphicon-trash pull-right'></span></li>");
+    $("#day"+currentDay+"-content #thing-to-do-list").append("<li>" + title + "<span data="+id+" id='trash-can-"+(markers.length-1)+"' class='glyphicon glyphicon-trash pull-right'></span></li>");
 
     setDeleteEvent(markers.length-1);
 
-    writeVisitToServer(thingData._id, currentDay, 'thingsToDos');
+    writeVisitToServer(thingData._id, currentDay, 'thingsToDos', title);
   });
 
   $("#btn-restaurant").click(function(){
+
+
     var select = $('#restaurant-select');
     var restData = JSON.parse($('option:selected', select).attr('data'));
     var markerInfoWindowContent = "<p><strong>" + restData.name +"</strong></p><p>Phone Number: "+ restData.place[0].phone +"</p><p>Address: "+restData.place[0].address+"</p>";
     var lat = restData.place[0].location[0];
     var longe = restData.place[0].location[1];
     var title = restData.name;
+    var id = restData._id
     var restIcon = "https://cdn4.iconfinder.com/data/icons/REALVISTA/food/png/64/french_fries.png";
     mapPrinter(lat, longe, markerInfoWindowContent, title, restIcon, currentDay);
-    $("#day"+currentDay+"-content #restaurant-list").append("<li>" + title + "<span id='trash-can-"+(markers.length-1)+"' class='glyphicon glyphicon-trash pull-right'></span></li>");
+    $("#day"+currentDay+"-content #restaurant-list").append("<li>" + title + "<span data="+id+" id='trash-can-"+(markers.length-1)+"' class='glyphicon glyphicon-trash pull-right'></span></li>");
 
     setDeleteEvent(markers.length-1);
 
-    writeVisitToServer(restData._id, currentDay, 'restaurants');
+
+    writeVisitToServer(restData._id, currentDay, 'restaurants', title);
   });
 
   $('#add-day').click(function(){
@@ -168,24 +186,27 @@ $(document).ready(function() {
 });
 
 function setDeleteEvent(id){
-  $('#trash-can-'+id).click(function(){
+  $('#trash-can').click(function(){
     markers[id].setMap(null);
     $(this).parent().remove();
   });
 }
 
 
-function writeVisitToServer(attraction_id, dayId, type_of_place) {
+function writeVisitToServer(attraction_id, dayId, type_of_place, name) {
   var post_data = {
     attraction_id: attraction_id,
-    attraction_type: type_of_place
+    attraction_type: type_of_place,
+    attraction_name: name
   };
 
   // the callback function below will be called if this request completes successfully.
   // the server's response to this request is passed into this callback function as "responseData"
 
   var post_callback = function (responseData) {
-    alert(responseData);
+    $.post( "/daytemplate/", responseData, function(responseData){
+      alert("done!");
+    });
   };
 
   // jQuery Ajax call

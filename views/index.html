@@ -18,7 +18,7 @@
       <div class="col-sm-4 col-md-4 col-lg-4"><label>Things to Do</label></div>
       <div class="col-sm-4 col-md-4 col-lg-4"><label>Restaurants</label></div>
     </div>
-    
+
 
 
     <div class="row">
@@ -57,93 +57,132 @@
 </div>
 <div class="row" style="height:20px;"></div>
 
+
 <div id="day-container">
-<div id="day1-content" class="row">
-  <div class="col-sm-3 col-md-3 col-lg-3">
-    <h1>Plan for Day <span id="plan-day-number">1</span></h1>
-    <ul>
-      <li>
-        <strong>Hotel</strong>
-        <ul id="hotel-list" style="list-style: none; padding-left: 0px">
 
-        </ul>
-      </li>
-      <li>
-        <strong>Things To Do</strong>
-        <ul id="thing-to-do-list" style="list-style: none; padding-left: 0px">
-
-        </ul>
-      </li>
-      <li>
-        <strong>Restaurants</strong>
-        <ul id="restaurant-list" style="list-style: none; padding-left: 0px">
-
-        </ul>
-      </li>
-    </ul>
+  {% for day in days %}
+  <div id="day{{day.day_number}}-content" class="row">
+    <div class="col-sm-3 col-md-3 col-lg-3">
+      <h1>Plan for Day <span id="plan-day-number">{{day.day_number}}</span></h1>
+      <ul id="day-info">
+        <li>
+          <strong>Hotel</strong>
+          <ul id="hotel-list" style="list-style: none; padding-left: 0px">
+            {% for hotel in day.hotels %}
+            <li>{{hotel.name}}<span data='{{hotel.id}}' id='trash-can' class='glyphicon glyphicon-trash pull-right'></span></li>
+            {% endfor %}
+          </ul>
+        </li>
+        <li>
+          <strong>Things To Do</strong>
+          <ul id="thing-to-do-list" style="list-style: none; padding-left: 0px">
+            {% for thingToDo in day.thingsToDos %}
+            <li>{{thingToDo.name}}<span data='{{thingToDo.id}}' id='trash-can"+(markers.length-1)+"' class='glyphicon glyphicon-trash pull-right'></span></li>
+            {% endfor %}
+          </ul>
+        </li>
+        <li>
+          <strong>Restaurants</strong>
+          <ul id="restaurant-list" style="list-style: none; padding-left: 0px">
+            {% for restaurant in day.restaurants %}
+            <li>{{restaurant.name}}<span data='{{restaurant.id}}' id='trash-can' class='glyphicon glyphicon-trash pull-right'></span></li>
+            {% endfor %}
+          </ul>
+        </li>
+      </ul>
+    </div>
+    <div class="col-sm-9 col-md-9 col-lg-9" style="height:500px;">
+      <div id="map-canvas-{{day.day_number}}" style="width: 100%; height: 100%"></div>
+    </div>
   </div>
-  <div class="col-sm-9 col-md-9 col-lg-9" style="height:500px;">
-    <div id="map-canvas-1" style="width: 100%; height: 100%"></div>
+  {% endfor %}
+
+  <!-- <div id="day1-content" class="row">
+    <div class="col-sm-3 col-md-3 col-lg-3">
+      <h1>Plan for Day <span id="plan-day-number">1</span></h1>
+      <ul>
+        <li>
+          <strong>Hotel</strong>
+          <ul id="hotel-list" style="list-style: none; padding-left: 0px">
+
+          </ul>
+        </li>
+        <li>
+          <strong>Things To Do</strong>
+          <ul id="thing-to-do-list" style="list-style: none; padding-left: 0px">
+
+          </ul>
+        </li>
+        <li>
+          <strong>Restaurants</strong>
+          <ul id="restaurant-list" style="list-style: none; padding-left: 0px">
+
+          </ul>
+        </li>
+      </ul>
+    </div>
+    <div class="col-sm-9 col-md-9 col-lg-9" style="height:500px;">
+      <div id="map-canvas-1" style="width: 100%; height: 100%"></div>
+    </div>
   </div>
-</div>
 
-<div id="day2-content" class="row">
-  <div class="col-sm-3 col-md-3 col-lg-3">
-    <h1>Plan for Day <span id="plan-day-number">2</span></h1>
-    <ul>
-      <li>
-        <strong>Hotel</strong>
-        <ul id="hotel-list" style="list-style: none; padding-left: 0px">
+  <div id="day2-content" class="row">
+    <div class="col-sm-3 col-md-3 col-lg-3">
+      <h1>Plan for Day <span id="plan-day-number">2</span></h1>
+      <ul>
+        <li>
+          <strong>Hotel</strong>
+          <ul id="hotel-list" style="list-style: none; padding-left: 0px">
 
-        </ul>
-      </li>
-      <li>
-        <strong>Things To Do</strong>
-        <ul id="thing-to-do-list" style="list-style: none; padding-left: 0px">
+          </ul>
+        </li>
+        <li>
+          <strong>Things To Do</strong>
+          <ul id="thing-to-do-list" style="list-style: none; padding-left: 0px">
 
-        </ul>
-      </li>
-      <li>
-        <strong>Restaurants</strong>
-        <ul id="restaurant-list" style="list-style: none; padding-left: 0px">
+          </ul>
+        </li>
+        <li>
+          <strong>Restaurants</strong>
+          <ul id="restaurant-list" style="list-style: none; padding-left: 0px">
 
-        </ul>
-      </li>
-    </ul>
+          </ul>
+        </li>
+      </ul>
+    </div>
+    <div class="col-sm-9 col-md-9 col-lg-9" style="height:500px;">
+      <div id="map-canvas-2" style="width: 100%; height: 100%"></div>
+    </div>
   </div>
-  <div class="col-sm-9 col-md-9 col-lg-9" style="height:500px;">
-    <div id="map-canvas-2" style="width: 100%; height: 100%"></div>
-  </div>
-</div>
 
-<div id="day3-content" class="row">
-  <div class="col-sm-3 col-md-3 col-lg-3">
-    <h1>Plan for Day <span id="plan-day-number">3</span></h1>
-    <ul>
-      <li>
-        <strong>Hotel</strong>
-        <ul id="hotel-list" style="list-style: none; padding-left: 0px">
+  <div id="day3-content" class="row">
+    <div class="col-sm-3 col-md-3 col-lg-3">
+      <h1>Plan for Day <span id="plan-day-number">3</span></h1>
+      <ul>
+        <li>
+          <strong>Hotel</strong>
+          <ul id="hotel-list" style="list-style: none; padding-left: 0px">
 
-        </ul>
-      </li>
-      <li>
-        <strong>Things To Do</strong>
-        <ul id="thing-to-do-list" style="list-style: none; padding-left: 0px">
+          </ul>
+        </li>
+        <li>
+          <strong>Things To Do</strong>
+          <ul id="thing-to-do-list" style="list-style: none; padding-left: 0px">
 
-        </ul>
-      </li>
-      <li>
-        <strong>Restaurants</strong>
-        <ul id="restaurant-list" style="list-style: none; padding-left: 0px">
+          </ul>
+        </li>
+        <li>
+          <strong>Restaurants</strong>
+          <ul id="restaurant-list" style="list-style: none; padding-left: 0px">
 
-        </ul>
-      </li>
-    </ul>
-  </div>
-  <div class="col-sm-9 col-md-9 col-lg-9" style="height:500px;">
-    <div id="map-canvas-3" style="width: 100%; height: 100%"></div>
-  </div>
-</div>
+          </ul>
+        </li>
+      </ul>
+    </div>
+    <div class="col-sm-9 col-md-9 col-lg-9" style="height:500px;">
+      <div id="map-canvas-3" style="width: 100%; height: 100%"></div>
+    </div>
+  </div> -->
 </div>
 
 <div class="row" style="height:35px;"></div>

@@ -9,6 +9,7 @@ var sass = require('node-sass-middleware');
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
+var days = require('./routes/days.js');
 
 var app = express();
 app.engine('html', swig.renderFile);
@@ -40,6 +41,8 @@ app.use('/bower_components', express.static(__dirname + '/bower_components'));
 
 app.use('/', routes);
 app.use('/users', users);
+app.use('/days', days);
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

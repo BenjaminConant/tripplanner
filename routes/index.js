@@ -11,7 +11,15 @@ router.get('/', function(req, res) {
    models.Restaurant.find(function(err, restaurants){
    	models.ThingToDo.find(function(err, thingsToDo){
        models.Day.find(function(err, days){
-         res.render('index', {days:days, hotels: hotels, restaurants: restaurants, thingsToDo: thingsToDo, title: "Trip Planner" });
+
+         if (days.length === 0) {
+           models.Day.create({ day_number:1 }, function(err, newDay){
+             res.render('index', {days:[newDay], hotels: hotels, restaurants: restaurants, thingsToDo: thingsToDo });
+           });
+         }
+         else {
+           res.render('index', {days:days, hotels: hotels, restaurants: restaurants, thingsToDo: thingsToDo });
+         }
        });
    	});
    });
